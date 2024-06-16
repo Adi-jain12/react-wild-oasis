@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import GlobalStyles from "./styles/GlobalStyles";
 
 const Button = styled.button`
   font-size: 1.4rem;
@@ -11,8 +12,20 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const StyledApp = styled.div`
+  background-color: orangered;
+  padding: 20px;
+`;
+
 const App = () => {
-  return <div>Hello</div>;
+  return (
+    <>
+      <GlobalStyles />
+      <StyledApp>
+        <Button onClick={() => alert("Hello")}>Button 1</Button>
+      </StyledApp>
+    </>
+  );
 };
 
 export default App;
