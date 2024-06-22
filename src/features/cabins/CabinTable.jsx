@@ -31,9 +31,9 @@ const TableHeader = styled.header`
 
 const CabinTable = () => {
   const { isLoading, cabins } = useFetchCabins();
-
   const [searchParams] = useSearchParams();
 
+  if (isLoading) return <Spinner />;
   if (!cabins.length) return <Empty resourceName="cabins" />;
 
   /* FILTER */
@@ -56,8 +56,6 @@ const CabinTable = () => {
   const sortedCabins = filteredCabins?.sort(
     (a, b) => (a[field] - b[field]) * modifier
   );
-
-  if (isLoading) return <Spinner />;
 
   return (
     <Table role="table">
