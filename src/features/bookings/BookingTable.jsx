@@ -4,6 +4,7 @@ import Empty from "../../ui/Empty";
 import { useFetchAllBookings } from "./bookings-api-client";
 import Spinner from "../../ui/Spinner";
 import styled from "styled-components";
+import Pagination from "../../ui/Pagination";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -29,8 +30,23 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
+const Footer = styled.footer`
+  background-color: var(--color-grey-50);
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
+
+  &:not(:has(*)) {
+    display: none;
+  }
+`;
+
 function BookingTable() {
-  const { bookings = [], isLoading } = useFetchAllBookings();
+  const { bookings = [], isLoading, count } = useFetchAllBookings();
+
+  // const bookingsLength = bookings.length;
+
+  // console.log(bookingsLength);
 
   if (isLoading) return <Spinner />;
   if (!bookings.length) return <Empty resourceName="bookings" />;
@@ -57,7 +73,12 @@ function BookingTable() {
       {bookings.map((booking) => (
         <BookingRow booking={booking} key={booking.id} />
       ))}
+
+      <Footer>
+        <Pagination count={count} />
+      </Footer>
     </Table>
+
     // </Menus>
   );
 }
