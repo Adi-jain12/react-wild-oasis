@@ -5,6 +5,8 @@ import Tag from "../../ui/Tag";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
+import { HiArrowDownOnSquare, HiEye } from "react-icons/hi2";
+import { useNavigate } from "react-router";
 
 const TableRow = styled.div`
   display: grid;
@@ -40,6 +42,10 @@ const Stacked = styled.div`
   }
 `;
 
+const Button = styled.button`
+  padding: 6px 6px;
+`;
+
 const Amount = styled.div`
   font-family: "Sono";
   font-weight: 500;
@@ -55,7 +61,7 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    // guests: { email },
+    guests: { fullName: guestName, email },
     cabins: { name: cabinName },
   },
 }) {
@@ -65,13 +71,15 @@ function BookingRow({
     "checked-out": "silver",
   };
 
+  const navigate = useNavigate();
+
   return (
     <TableRow>
       <Cabin>{cabinName}</Cabin>
 
       <Stacked>
-        {/* <span>{guestName}</span> */}
-        {/* <span>{email}</span> */}
+        <span>{guestName}</span>
+        <span>{email}</span>
       </Stacked>
 
       <Stacked>
@@ -90,6 +98,18 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
+
+      <div>
+        <Button onClick={() => navigate(`/bookings/${bookingId}`)}>
+          <HiEye /> Show Details
+        </Button>
+
+        {status === "unconfirmed" && (
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
+            <HiArrowDownOnSquare /> CheckIn
+          </Button>
+        )}
+      </div>
     </TableRow>
   );
 }
