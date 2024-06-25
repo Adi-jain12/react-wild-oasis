@@ -43,6 +43,8 @@ const Filter = ({ filterField, options }) => {
   const handleFilterClick = (value) => {
     //it modifies the searchParams object, and setting it back using setSearchParams causes a re-render with the updated query parameters.
     searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", 1); // while changing filter we want to reset page to 1
+
     setSearchParams(searchParams);
   };
 

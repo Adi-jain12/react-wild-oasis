@@ -5,8 +5,11 @@ import Tag from "../../ui/Tag";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
-import { HiArrowDownOnSquare, HiEye } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiArrowUpOnSquare, HiEye } from "react-icons/hi2";
 import { useNavigate } from "react-router";
+import { useCheckout } from "../check-in-out/checkinout-api-client";
+import CheckoutButton from "../check-in-out/CheckoutButton";
+import { useDeleteBooking } from "./bookings-api-client";
 
 const TableRow = styled.div`
   display: grid;
@@ -65,6 +68,9 @@ function BookingRow({
     cabins: { name: cabinName },
   },
 }) {
+  const { deleteBooking, isDeleting } = useDeleteBooking();
+  const { checkout, isCheckingOut } = useCheckout();
+
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
@@ -109,6 +115,21 @@ function BookingRow({
             <HiArrowDownOnSquare /> CheckIn
           </Button>
         )}
+
+        {status === "checked-in" && (
+          <CheckoutButton
+            bookingId={bookingId}
+            onHandleCheckout={checkout}
+            isDisabled={isCheckingOut}
+          >
+            <HiArrowUpOnSquare />
+            Checkout
+          </CheckoutButton>
+        )}
+
+        <Button disabled={isDeleting} onClick={() => deleteBooking(bookingId)}>
+          Delete Booking
+        </Button>
       </div>
     </TableRow>
   );

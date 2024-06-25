@@ -1,9 +1,14 @@
 import Button from "../../ui/Button";
 
-function CheckoutButton({ bookingId }) {
+function CheckoutButton({ bookingId, children, onHandleCheckout, isDisabled }) {
   return (
-    <Button variation="primary" size="small">
-      Check out
+    <Button
+      disabled={isDisabled}
+      onClick={() => onHandleCheckout(bookingId)}
+      variation="primary"
+      size="small"
+    >
+      {children}
     </Button>
   );
 }
