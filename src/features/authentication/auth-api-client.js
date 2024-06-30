@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createEditCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import { signup as signupApi, login as loginApi } from "../../services/apiAuth";
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
 
   const { mutate: login, isLoading } = useMutation({
-    mutationFn: ({ user }) => loginUser(user),
+    mutationFn: ({ user }) => loginApi(user),
 
     onSuccess: () => {
       toast.success("User login successfully");
@@ -44,3 +44,16 @@ export const useCreateUser = () => {
 
   return { createUser, isLoading };
 };
+
+export function useSignup() {
+  const { mutate: signup, isLoading } = useMutation({
+    mutationFn: signupApi,
+    onSuccess: (user) => {
+      toast.success(
+        "Account successfully created! Please verufy the new account from the user's email address."
+      );
+    },
+  });
+
+  return { signup, isLoading };
+}
