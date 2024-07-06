@@ -1,14 +1,10 @@
 import CabinTable from "../features/cabins/CabinTable";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
-import Button from "../ui/Button";
-import { useState } from "react";
-import CreateCabinForm from "../features/cabins/CreateCabinForm";
+import AddCabin from "../features/cabins/AddCabin";
 import CabinTableOperations from "../features/cabins/CabinTableOperations";
 
 function Cabins() {
-  const [newCabin, setNewCabin] = useState(false);
-
   return (
     <>
       <Row type="horizontal">
@@ -18,10 +14,7 @@ function Cabins() {
 
       <Row>
         <CabinTable />
-        <Button onClick={() => setNewCabin((prevCabin) => !prevCabin)}>
-          Add new cabin
-        </Button>
-        {newCabin && <CreateCabinForm />}
+        <AddCabin />
       </Row>
     </>
   );
